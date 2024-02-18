@@ -249,7 +249,7 @@ python-slugify==8.0.1
 pytz==2022.7.1
 pytz-deprecation-shim==0.1.0.post0
 PyWavelets==1.4.1
-pywin32==306
+pywin32
 pywin32-ctypes==0.2.2
 pywinpty==2.0.12
 PyYAML==6.0.1
