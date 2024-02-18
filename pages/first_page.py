@@ -18,8 +18,7 @@ def main():
     classes_done = []
     with st.sidebar:
         st.subheader('Add your Clarifai PAT.')
-        # clarifai_pat = st.text_input('Clarifai PAT:', type='password')
-        clarifai_pat = "b0832f0bdcc14c4ba5b57ed5e3401f05"
+        clarifai_pat = st.text_input('Clarifai PAT:', type='password')
     if not clarifai_pat:
         st.warning('Please enter your PAT to continue!', icon='⚠️')
         return
@@ -32,14 +31,9 @@ def main():
         st.warning("Please upload an image!")
         return
     
-    with open(uploaded_file.name, "wb") as f:
-        f.write(uploaded_file.getvalue())
-    
     
     image = Image.open(uploaded_file)
     image = image.convert('RGBA')
-    with open(uploaded_file.name, "rb") as f:
-        file_bytes = f.read()
     
 
     # Step 3: Allow user to add labels of the image
@@ -75,9 +69,9 @@ def main():
                 prompt = f"Label the object in the Bounding Box region: ({top_row}, {left_col}, {bottom_row}, {right_col}) with one word {labels_list}"
 
                 inference_params = dict(temperature=0.2, max_tokens=100)
-                model_prediction = Model("https://clarifai.com/openai/chat-completion/models/openai-gpt-4-vision").predict(inputs = [Inputs.get_multimodal_input(input_id="", image_bytes = file_bytes, raw_text=prompt)], inference_params=inference_params)
+                model_prediction = Model("https://clarifai.com/openai/chat-completion/models/openai-gpt-4-vision").predict(inputs = [Inputs.get_multimodal_input(input_id="", image_bytes = uploaded_file.getvalue(), raw_text=prompt)], inference_params=inference_params)
+                
 
-                # model_prediction = Model(model_url).predict_by_bytes(prompt.encode(), input_type="text", inference_params=inference_params)
 
                 concept_name = model_prediction.outputs[0].data.text.raw
                 value = round(concept.value, 4)
@@ -98,7 +92,6 @@ def main():
                     draw.text((int(left_col), int(top_row - 15)), concept_name, font=font, fill=(36, 255, 12))
 
         st.image(image, caption='Image with Label', channels='BGR', use_column_width=True)
-        os.remove(uploaded_file.name)
 
 if __name__ == '__main__':
     main()
