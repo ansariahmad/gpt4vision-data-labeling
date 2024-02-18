@@ -1,6 +1,4 @@
-![Clarifai logo](https://www.clarifai.com/hs-fs/hubfs/logo/Clarifai/clarifai-740x150.png?width=240)
-
-# **Object Labeling App Readme**
+# **Object Labeling App**
 
 ## **Overview:**
 This is a Streamlit application designed for labeling objects in images. The application utilizes two primary models: 
